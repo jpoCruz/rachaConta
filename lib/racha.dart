@@ -6,6 +6,7 @@ class Racha extends StatefulWidget {
 }
 
 class _DemoState extends State<Racha> {
+
   TextEditingController _totalController = TextEditingController();
   TextEditingController _alcoholController = TextEditingController();
   TextEditingController _peopleController = TextEditingController();
@@ -16,9 +17,32 @@ class _DemoState extends State<Racha> {
   double _currentSliderValue = 5;
 
 
+
+  showAlertDialog(BuildContext context)
+  {
+
+    // configura o  AlertDialog
+    AlertDialog alerta = AlertDialog(
+      title: Text("Como usar o app"),
+      content: Text("Escreva o valor total da conta e o valor das bebidas (incluído, não subtraia as bebidas do total)."
+          "\n\nDepois, escreva quantas pessoas vão dividir a conta, e quantas dessas pessoas pediram bebidas com álcool."
+          "\n\nPronto! Agora é só clicar em calcular."),
+
+    );
+    // exibe o dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alerta;
+      },
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text('Racha Conta'),
         centerTitle: true,
@@ -29,19 +53,6 @@ class _DemoState extends State<Racha> {
         padding: EdgeInsets.symmetric(horizontal: 10.0),
         child: Column(
           children: <Widget>[
-
-            SizedBox(height: 15), //25 pixel de espaço
-            Text(
-              "Escreva o valor total da conta e o valor das bebidas (incluído, não subtraia as bebidas do total)."
-                  "\n\nDepois, escreva quantas pessoas vão dividir a conta, e quantas dessas pessoas pediram bebidas com álcool."
-                  "\n\nPronto! Agora é só clicar em calcular.",
-              style: TextStyle(
-                color: Colors.black26,
-                fontSize: 15,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-
             SizedBox(height: 15), //15 pixel de espaço
 
             TextField(
@@ -125,15 +136,18 @@ class _DemoState extends State<Racha> {
             SizedBox(height: 45), //15 pixel de espaço
 
             FloatingActionButton(
-                onPressed: () {
-                },
-                child: Icon(Icons.help_outline),
-                backgroundColor: Colors.amber,
+              onPressed: () {
+                showAlertDialog(context);
+              },
+              child: Icon(Icons.help_outline),
+              backgroundColor: Colors.amber,
+              
             ),
           ],
         ),
       ),
     );
+
   }
 
   void calculate() {
